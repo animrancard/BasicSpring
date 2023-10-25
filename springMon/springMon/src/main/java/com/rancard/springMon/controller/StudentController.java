@@ -18,11 +18,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    @GetMapping
+    @GetMapping // Get all students
     public List<StudentModel> allStudents(){
         return studentService.getAllStudents();
     }
-    @GetMapping("/{studentID}")
+    @GetMapping("/{studentID}") // Get single student
     public ResponseEntity<StudentModel> getSingleStudent(@PathVariable String studentID){
         Optional<StudentModel> student = studentService.getStudentByID(studentID);
 
@@ -31,22 +31,21 @@ public class StudentController {
         }
         return ResponseEntity.notFound().build();
     }
-    @DeleteMapping("/{studentID}")
-    public ResponseEntity<Map<String, String>> deleteSingleStudent(@PathVariable String studentID){
+    // Delete Student
+    @DeleteMapping("/{studentID}") // delete student
+    public ResponseEntity<?> deleteSingleStudent(@PathVariable String studentID){
         if (studentService.deleteStudent(studentID)){
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "delete success");
-            return ResponseEntity.ok(response);
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
-    @PostMapping
+    @PostMapping // Create student
     public ResponseEntity<StudentModel> createStudent(@RequestBody StudentModel student){
         StudentModel savedStudent = studentService.createStudent(student);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{studentID}")
+    @PutMapping("/{studentID}") // put student
     public ResponseEntity<StudentModel> putStudent(@PathVariable String studentID, @RequestBody StudentModel updatedStudent){
         ResponseEntity<StudentModel> response = studentService.updateStudent(studentID, updatedStudent);
         if (response.getStatusCode() == HttpStatus.OK){
