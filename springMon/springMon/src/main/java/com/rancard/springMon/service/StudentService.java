@@ -21,4 +21,11 @@ public class StudentService {
     public Optional<StudentModel> getStudentByID(String studentID){
         return studentRepository.findById(studentID);
     }
+    public boolean deleteStudent(String studentID){
+        if (studentRepository.existsById(studentID)){
+            studentRepository.deleteById(studentID);
+            return true;
+        }
+        return false;
+    }
 }

@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +27,15 @@ public class StudentController {
 
         if (student.isPresent()){
             return ResponseEntity.ok(student.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @DeleteMapping("/{studentID}")
+    public ResponseEntity<Map<String, String>> deleteSingleStudent(@PathVariable String studentID){
+        if (studentService.deleteStudent(studentID)){
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "delete success");
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
     }
