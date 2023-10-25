@@ -1,28 +1,14 @@
 package com.rancard.springMon;
 
-import com.rancard.springMon.model.StudentAddress;
-import com.rancard.springMon.model.StudentGender;
-import com.rancard.springMon.model.StudentModel;
-import com.rancard.springMon.model.StudentRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootApplication
 public class SpringMonApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMonApplication.class, args);
 	}
-
 //	@Bean
 //	CommandLineRunner runner (StudentRepository repository, MongoTemplate mongoTemplate){
 //		return args -> {
