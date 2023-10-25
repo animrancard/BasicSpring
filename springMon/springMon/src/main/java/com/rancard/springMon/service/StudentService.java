@@ -28,4 +28,7 @@ public class StudentService {
         }
         return false;
     }
+    public StudentModel updateStudent(StudentModel studentModel){
+        return studentRepository.save(studentModel);
+    }
 }
