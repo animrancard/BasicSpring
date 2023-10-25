@@ -48,20 +48,25 @@ public class StudentController {
 
     @PutMapping("/{studentID}")
     public ResponseEntity<StudentModel> putStudent(@PathVariable String studentID, @RequestBody StudentModel updatedStudent){
-        Optional<StudentModel> existingStudent = studentService.getStudentByID(studentID);
-        if (existingStudent.isPresent()){
-            StudentModel updated = existingStudent.get();
-            updated.setFirstName(updatedStudent.getFirstName());
-            updated.setLastName(updatedStudent.getLastName());
-            updated.setStudentAddress(updatedStudent.getStudentAddress());
-            updated.setEmail(updatedStudent.getEmail());
-            updated.setGender(updatedStudent.getGender());
-            updated.setAmountSpent(updatedStudent.getAmountSpent());
-            updated.setElectiveSubjects(updatedStudent.getElectiveSubjects());
-
-            StudentModel savedStudent = studentService.updateStudent(updated);
-            return ResponseEntity.ok(savedStudent);
+        ResponseEntity<StudentModel> response = studentService.updateStudent(studentID, updatedStudent);
+        if (response.getStatusCode() == HttpStatus.OK){
+            return response;
         }
         return ResponseEntity.notFound().build();
+//        Optional<StudentModel> existingStudent = studentService.getStudentByID(studentID);
+//        if (existingStudent.isPresent()){
+//            StudentModel updated = existingStudent.get();
+//            updated.setFirstName(updatedStudent.getFirstName());
+//            updated.setLastName(updatedStudent.getLastName());
+//            updated.setStudentAddress(updatedStudent.getStudentAddress());
+//            updated.setEmail(updatedStudent.getEmail());
+//            updated.setGender(updatedStudent.getGender());
+//            updated.setAmountSpent(updatedStudent.getAmountSpent());
+//            updated.setElectiveSubjects(updatedStudent.getElectiveSubjects());
+//
+//            StudentModel savedStudent = studentService.updateStudent(updated);
+//            return ResponseEntity.ok(savedStudent);
+//        }
+//        return ResponseEntity.notFound().build();
     }
 }
