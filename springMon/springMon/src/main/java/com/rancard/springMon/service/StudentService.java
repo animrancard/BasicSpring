@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class StudentService {
@@ -15,5 +17,8 @@ public class StudentService {
     }
     public StudentModel createStudent(StudentModel studentModel){
         return studentRepository.save(studentModel);
+    }
+    public Optional<StudentModel> getStudentByID(String studentID){
+        return studentRepository.findById(studentID);
     }
 }

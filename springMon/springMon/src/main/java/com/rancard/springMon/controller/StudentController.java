@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -17,6 +18,15 @@ public class StudentController {
     @GetMapping
     public List<StudentModel> allStudents(){
         return studentService.getAllStudents();
+    }
+    @GetMapping("/{studentID}")
+    public ResponseEntity<StudentModel> getSingleStudent(@PathVariable String studentID){
+        Optional<StudentModel> student = studentService.getStudentByID(studentID);
+
+        if (student.isPresent()){
+            return ResponseEntity.ok(student.get());
+        }
+        return ResponseEntity.notFound().build();
     }
     @PostMapping
     public ResponseEntity<StudentModel> createStudent(@RequestBody StudentModel student){
