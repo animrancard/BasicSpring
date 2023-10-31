@@ -1,0 +1,5 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.fontSize": 11,
+    "editor.fontFamily": "'Inter'"
+}
