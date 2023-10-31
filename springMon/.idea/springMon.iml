@@ -3,4 +3,7 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="36c8f8cd-14c0-4754-a0d4-35ffb650e127" />
+  </component>
 </module>

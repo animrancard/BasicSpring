@@ -1,9 +1,9 @@
 package com.rancard.springMon.controller;
 
+import com.rancard.springMon.exception.StudentNotFoundException;
 import com.rancard.springMon.model.StudentModel;
-import com.rancard.springMon.model.StudentRepository;
 import com.rancard.springMon.service.StudentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,26 +15,27 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/students")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
     @GetMapping // Get all students
     public List<StudentModel> allStudents(){
         return studentService.getAllStudents();
     }
-    @GetMapping("/{studentID}") // Get single student
-    public ResponseEntity<StudentModel> getSingleStudent(@PathVariable String studentID){
-        Optional<StudentModel> student = studentService.getStudentByID(studentID);
-
-        if (student.isPresent()){
-            return ResponseEntity.ok(student.get());
+    @GetMapping("/{studentId}") // Get single student
+    public ResponseEntity<StudentModel> getSingleStudent(@PathVariable String studentId) {
+        try {
+            StudentModel student = studentService.getStudentByID(studentId);
+            return ResponseEntity.ok(student);
+        } catch (StudentNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
+
     // Delete Student
-    @DeleteMapping("/{studentID}") // delete student
-    public ResponseEntity<?> deleteSingleStudent(@PathVariable String studentID){
-        if (studentService.deleteStudent(studentID)){
+    @DeleteMapping("/{studentId}") // delete student
+    public ResponseEntity<?> deleteSingleStudent(@PathVariable String studentId){
+        if (studentService.deleteStudent(studentId)){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
@@ -52,6 +53,7 @@ public class StudentController {
             return response;
         }
         return ResponseEntity.notFound().build();
+
 //        Optional<StudentModel> existingStudent = studentService.getStudentByID(studentID);
 //        if (existingStudent.isPresent()){
 //            StudentModel updated = existingStudent.get();

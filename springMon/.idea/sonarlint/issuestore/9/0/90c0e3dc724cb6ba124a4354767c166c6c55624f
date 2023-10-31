@@ -1,0 +1,15 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ë­Œœ
+A
+java:S1452$"&Remove usage of generic wildcard type.(êµë¥úÿÿÿÿ
+[
+java:S4684+"@Replace this persistent entity with a simple POJO or DTO object.(ù÷ýØýÿÿÿÿ
+V
+java:S46841"@Replace this persistent entity with a simple POJO or DTO object.(÷ïùÐ
+P	java:S1257"<This block of commented-out lines of code should be removed.(ñ»ÌS
+`
+java:S1128"JRemove this unused import 'com.rancard.springMon.model.StudentRepository'.(¦Ëáâ
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ

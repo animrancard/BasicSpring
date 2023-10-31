@@ -1,5 +1,6 @@
 package com.rancard.springMon.service;
 
+import com.rancard.springMon.exception.StudentNotFoundException;
 import com.rancard.springMon.model.StudentModel;
 import com.rancard.springMon.model.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,12 @@ public class StudentService {
     public StudentModel createStudent(StudentModel studentModel){
         return studentRepository.save(studentModel);
     }
-    public Optional<StudentModel> getStudentByID(String studentID){
-        return studentRepository.findById(studentID);
+    public StudentModel getStudentByID(String studentID){
+        StudentModel studentModel = studentRepository.findById(studentID).orElse(null);
+        if (studentModel == null){
+            throw new StudentNotFoundException("Student with ID " + studentID + " not found");
+        }
+        return studentModel;
     }
     public boolean deleteStudent(String studentID){
         if (studentRepository.existsById(studentID)){
@@ -29,42 +34,40 @@ public class StudentService {
         }
         return false;
     }
-    public ResponseEntity<StudentModel> updateStudent(String studentID, StudentModel updatedStudent){
-        Optional<StudentModel> existingStudent = getStudentByID(studentID);
-
-        if (existingStudent.isPresent()){
-            StudentModel existing = existingStudent.get();
-            // firstName
+    public ResponseEntity<StudentModel> updateStudent(String studentId, StudentModel updatedStudent){
+        try{
+            StudentModel existingStudent = getStudentByID(studentId);
             if (updatedStudent.getFirstName() != null){
-                existing.setFirstName(updatedStudent.getFirstName());
+                existingStudent.setFirstName(updatedStudent.getFirstName());
             }
             // lastName
             if (updatedStudent.getLastName() != null){
-                existing.setLastName(updatedStudent.getLastName());
+                existingStudent.setLastName(updatedStudent.getLastName());
             }
             // Email
             if (updatedStudent.getEmail() != null){
-                existing.setEmail(updatedStudent.getEmail());
+                existingStudent.setEmail(updatedStudent.getEmail());
             }
             // Gender
             if (updatedStudent.getGender() != null){
-                existing.setGender(updatedStudent.getGender());
+                existingStudent.setGender(updatedStudent.getGender());
             }
             // Elective
             if (updatedStudent.getElectiveSubjects() != null){
-                existing.setElectiveSubjects(updatedStudent.getElectiveSubjects());
+                existingStudent.setElectiveSubjects(updatedStudent.getElectiveSubjects());
             }
             // amountSpent
             if (updatedStudent.getAmountSpent() != null){
-                existing.setAmountSpent(updatedStudent.getAmountSpent());
+                existingStudent.setAmountSpent(updatedStudent.getAmountSpent());
             }
             // address
             if (updatedStudent.getStudentAddress() != null){
-                existing.setStudentAddress(updatedStudent.getStudentAddress());
+                existingStudent.setStudentAddress(updatedStudent.getStudentAddress());
             }
-            StudentModel savedStudent = studentRepository.save(existing);
+            StudentModel savedStudent = studentRepository.save(existingStudent);
             return ResponseEntity.ok(savedStudent);
+        } catch (StudentNotFoundException e){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 }
