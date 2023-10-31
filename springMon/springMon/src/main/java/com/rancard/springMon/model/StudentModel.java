@@ -3,14 +3,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class StudentModel {
     @Id
@@ -25,15 +29,4 @@ public class StudentModel {
     private BigDecimal amountSpent;
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
-
-//    public StudentModel(String firstName, String lastName, String email, StudentGender gender, StudentAddress studentAddress, List<String> electiveSubjects, BigDecimal amountSpent, LocalDateTime createdAt) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.gender = gender;
-//        this.studentAddress = studentAddress;
-//        this.electiveSubjects = electiveSubjects;
-//        this.amountSpent = amountSpent;
-//        this.createdAt = LocalDateTime.now();
-//    }
 }
